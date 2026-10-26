@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0d12;
+  --color-surface: #12171f;
+  --color-surface-2: #1a212c;
+  --color-fg: #e7edf5;
+  --color-muted: #8b97a8;
+  --color-brass: #e0a322;
+  --color-brass-ink: #1a1408;
+  --color-blueprint: #5ec8e0;
+  --color-line: #3a4658;
+  --color-danger: #e15b4c;
+  --color-ok: #3cba8c;
+  --color-lumen: #07090c;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-lg: 0.75rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html,
+  body {
+    height: 100%;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+  }
+}
+
+input[type="range"] {
+  accent-color: var(--color-brass);
+  height: 1.5rem;
+}
+
+.qf-dots {
+  background-image: radial-gradient(rgba(224, 163, 34, 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.qf-blueprint {
+  background-image:
+    linear-gradient(to right, rgba(94, 200, 224, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(94, 200, 224, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

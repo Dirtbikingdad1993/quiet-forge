@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "QuietForge",
+      "hasCanvas": false,
+      "bodyTextLen": 1011,
+      "bodyTextHash": "a3afa48fe31bc029ab0902496c8bcbda8cf2cc25a43f9f63fecc9a030ebd8523",
+      "bodyTextPrefix": "QuietForge CONCEPT STUDIO Sketch Screen Studies in mm Saved on t",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "QuietForge",
+      "hasCanvas": false,
+      "bodyTextLen": 930,
+      "bodyTextHash": "2ce537ce4dc86b5c6eddd68e6728b35ee86ad947f89536b12b1ccd82c3c9287c",
+      "bodyTextPrefix": "QuietForge Concept studio in mm Concept sketches only. In the US",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

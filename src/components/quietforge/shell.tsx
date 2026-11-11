@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Calculator, Compass, FolderKanban } from "lucide-react";
+import { Calculator, Compass, FolderKanban, Download } from "lucide-react";
 import { Dashboard } from "@/components/quietforge/dashboard";
 import { Engineering } from "@/components/quietforge/engineering";
 import { Studio } from "@/components/quietforge/studio";
 import { AccountControl } from "@/components/quietforge/account-control";
 import { Guide } from "@/components/quietforge/guide";
+import { ExportPanel } from "@/components/quietforge/export-panel";
 import { activeProject, useForge } from "@/lib/quietforge/store";
 import { useCloudSync } from "@/lib/quietforge/use-cloud-sync";
 import { ink } from "@/lib/quietforge/ink";
@@ -20,6 +21,7 @@ const NAV: { id: ViewId; label: string; icon: typeof Compass }[] = [
 export function Shell() {
   const { user, isPending } = useCurrentUserState();
   const [readyKey, setReadyKey] = useState<string | null>(null);
+  const [exportOpen, setExportOpen] = useState(false);
   const [hadSavedKey, setHadSavedKey] = useState(false);
   const storageKey = user && !user.isDevFallback ? `quietforge.v1.user.${user.id}` : "quietforge.v1";
   const sync = useCloudSync(user && !user.isDevFallback ? user.id : null, !isPending && readyKey === storageKey, hadSavedKey);
@@ -111,10 +113,15 @@ export function Shell() {
         {sync.error && !sync.conflict && (
           <p role="status" className="border-b border-border px-4 py-2 text-xs text-muted">{sync.error}</p>
         )}
-        <p className="border-b border-border px-4 py-2 text-xs leading-relaxed text-muted">
-          Concept sketches only. In the US a silencer is an NFA firearm — making one without an approved Form 1
-          is a federal felony. This is not a manufacturing drawing, a print file, or a safety approval.
-        </p>
+        <div className="flex items-center gap-3 border-b border-border px-4 py-2">
+          <p className="min-w-0 flex-1 text-xs leading-relaxed text-muted">
+            Concept sketches only. Not a manufacturing drawing, print file, or safety approval.
+          </p>
+          <button type="button" onClick={() => setExportOpen(true)}
+            className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-surface px-3 text-sm font-medium text-fg hover:bg-surface-2">
+            <Download className="size-4" /> Export
+          </button>
+        </div>
 
         {active ? (
           <Studio
@@ -163,6 +170,7 @@ export function Shell() {
           </button>
         ))}
       </nav>
+      <ExportPanel open={exportOpen} onClose={() => setExportOpen(false)} activeName={active?.name ?? null} projects={projects} />
       <Guide view={view} />
     </div>
   );

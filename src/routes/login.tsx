@@ -140,6 +140,10 @@ function Login() {
                 <LockKeyhole className="mt-0.5 size-4 shrink-0" />
                 Your password is handled securely. Your studies are private to your account and sync to the cloud.
               </p>
+              <p className="mt-3 text-xs leading-relaxed text-muted">
+                Early access: automated email verification and password recovery are not yet available.
+                Use a unique password you can safely retain, and export backups of important studies.
+              </p>
             </>
           )}
         </section>

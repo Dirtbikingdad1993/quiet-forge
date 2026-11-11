@@ -116,8 +116,12 @@ export const useForge = create<ForgeState>()(
                 })
                 .filter((p): p is Project => p !== null && Boolean(p.id))
             : current.projects;
-          const list = projects.length ? projects : current.projects;
-          const activeId = list.some((p) => p.id === saved.activeId) ? (saved.activeId as string) : list[0].id;
+          // An intentionally empty saved workspace must never inherit another
+          // account's projects from the in-memory Zustand state.
+          const list = incoming === null ? current.projects : projects;
+          const activeId = list.some((p) => p.id === saved.activeId)
+            ? (saved.activeId as string)
+            : (list[0]?.id ?? "");
           const view: ViewId =
             saved.view === "projects" || saved.view === "engineering" || saved.view === "studio"
               ? saved.view

@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Suppressor Studio";
-const PUBLIC_ORIGIN = "https://quiet-forge.com";
+const PUBLIC_ORIGIN = "https://suppressor-studio.vercel.app";
 
 export const Route = createRootRoute({
   head: () => ({

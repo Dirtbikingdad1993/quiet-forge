@@ -22,6 +22,7 @@ export function Dashboard({
   onDuplicate,
   onRemove,
   onReplace,
+  cloudEnabled,
 }: {
   projects: Project[];
   unit: Unit;
@@ -32,6 +33,7 @@ export function Dashboard({
   onDuplicate: (id: string) => void;
   onRemove: (id: string) => void;
   onReplace: (projects: Project[]) => void;
+  cloudEnabled: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [creating, setCreating] = useState(false);
@@ -52,7 +54,7 @@ export function Dashboard({
     const blob = new Blob([JSON.stringify({ version: 3, projects }, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "quietforge-studies.json";
+    a.download = "suppressor-studio-studies.json";
     a.click();
     URL.revokeObjectURL(a.href);
   };
@@ -64,7 +66,7 @@ export function Dashboard({
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Studies</h1>
             <p className="mt-1 max-w-xl text-sm text-muted">
-              Parametric cross-sections saved on this device. Open one to edit the sketch.
+              {cloudEnabled ? "Your studies sync to your account across devices. Open one to edit the sketch." : "Parametric cross-sections saved on this device. Open one to edit the sketch."}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -103,7 +105,7 @@ export function Dashboard({
                 if (!file) return;
                 const parsed = parseBackup(await file.text());
                 if (!parsed) {
-                  setNotice("That file is not a QuietForge study backup.");
+                  setNotice("That file is not a Suppressor Studio study backup.");
                   return;
                 }
                 onReplace(parsed);

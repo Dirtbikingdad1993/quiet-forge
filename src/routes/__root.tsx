@@ -4,7 +4,8 @@ import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { Analytics } from "@vercel/analytics/react";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "QuietForge";
+const APP_NAME = "Suppressor Studio";
+const PUBLIC_ORIGIN = "https://quiet-forge.com";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -17,6 +18,13 @@ export const Route = createRootRoute({
         content:
           "Concept studio for suppressor cross-section sketches and classroom estimates. Not a manufacturing drawing or a safety approval.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: APP_NAME },
+      { property: "og:description", content: "Explore concept sketches and educational engineering estimates in Suppressor Studio." },
+      { property: "og:image", content: `${PUBLIC_ORIGIN}/og.jpg` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: APP_NAME },
+      { name: "twitter:image", content: `${PUBLIC_ORIGIN}/og.jpg` },
       { name: "theme-color", content: "#0a0d12" },
     ],
     links: [

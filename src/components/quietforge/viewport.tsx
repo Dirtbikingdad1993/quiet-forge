@@ -96,7 +96,7 @@ export function Viewport({ derived, mode, unit, visible }: Props) {
     note.setAttribute("fill", ink.muted);
     note.setAttribute("font-size", "12");
     note.setAttribute("font-family", "IBM Plex Mono, ui-monospace, monospace");
-    note.textContent = "QUIETFORGE CONCEPT SKETCH — NOT A MANUFACTURING DRAWING";
+    note.textContent = "SUPPRESSOR STUDIO CONCEPT SKETCH — NOT A MANUFACTURING DRAWING";
     clone.appendChild(note);
     const blob = new Blob([new XMLSerializer().serializeToString(clone)], { type: "image/svg+xml" });
     const a = document.createElement("a");

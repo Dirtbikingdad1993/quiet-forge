@@ -28,6 +28,18 @@ type ForgeState = {
   replaceAll: (projects: Project[]) => void;
 };
 
+export type WorkspaceSnapshot = Pick<ForgeState, "projects" | "activeId" | "view" | "unit" | "renderMode">;
+
+export function workspaceSnapshot(state: WorkspaceSnapshot): WorkspaceSnapshot {
+  return {
+    projects: state.projects,
+    activeId: state.activeId,
+    view: state.view,
+    unit: state.unit,
+    renderMode: state.renderMode,
+  };
+}
+
 export const useForge = create<ForgeState>()(
   persist(
     (set, get) => ({
@@ -84,13 +96,11 @@ export const useForge = create<ForgeState>()(
     {
       name: "quietforge.v1",
       version: 1,
-      partialize: (state) => ({
-        projects: state.projects,
-        activeId: state.activeId,
-        view: state.view,
-        unit: state.unit,
-        renderMode: state.renderMode,
-      }),
+      // The shell chooses the guest or verified-user storage key only after
+      // the session resolves. Hydrating before that can expose the last
+      // visitor's local projects to another account on a shared device.
+      skipHydration: true,
+      partialize: (state) => workspaceSnapshot(state),
       merge: (persisted, current) => {
         try {
           const saved = (persisted ?? {}) as Partial<ForgeState>;
@@ -106,8 +116,12 @@ export const useForge = create<ForgeState>()(
                 })
                 .filter((p): p is Project => p !== null && Boolean(p.id))
             : current.projects;
-          const list = projects.length ? projects : current.projects;
-          const activeId = list.some((p) => p.id === saved.activeId) ? (saved.activeId as string) : list[0].id;
+          // An intentionally empty saved workspace must never inherit another
+          // account's projects from the in-memory Zustand state.
+          const list = incoming === null ? current.projects : projects;
+          const activeId = list.some((p) => p.id === saved.activeId)
+            ? (saved.activeId as string)
+            : (list[0]?.id ?? "");
           const view: ViewId =
             saved.view === "projects" || saved.view === "engineering" || saved.view === "studio"
               ? saved.view

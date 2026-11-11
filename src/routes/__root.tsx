@@ -44,6 +44,10 @@ export const Route = createRootRoute({
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <meta property="og:image" content={`${PUBLIC_ORIGIN}/og.jpg`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:image" content={`${PUBLIC_ORIGIN}/og.jpg`} />
       </head>
       <body className="bg-bg font-sans text-fg antialiased">
         <PreviewHostBridge />

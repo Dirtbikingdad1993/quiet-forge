@@ -56,10 +56,12 @@ test("non-.sql entries are dropped (readdir also yields the auth/ directory)", (
   assert.deepEqual(pendingMigrations(["auth", "README.md"], []), []);
 });
 
-test("QuietForge's enabled auth schema is included in the migration plan", () => {
+test("account, cloud workspace, and plan migrations are included in order", () => {
   const migrationsDir = join(projectRoot(), "migrations");
   assert.deepEqual(pendingMigrations(readdirSync(migrationsDir), []), [
     { name: "0001_auth.sql", path: "0001_auth.sql" },
+    { name: "0002_user_workspaces.sql", path: "0002_user_workspaces.sql" },
+    { name: "0003_plans.sql", path: "0003_plans.sql" },
   ]);
   assert.ok(readdirSync(join(migrationsDir, "auth")).includes("0001_auth.sql"));
 });

@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { Calculator, Compass, FolderKanban } from "lucide-react";
 import { Dashboard } from "@/components/quietforge/dashboard";
 import { Engineering } from "@/components/quietforge/engineering";
 import { Studio } from "@/components/quietforge/studio";
+import { AccountControl } from "@/components/quietforge/account-control";
 import { activeProject, useForge } from "@/lib/quietforge/store";
 import { ink } from "@/lib/quietforge/ink";
+import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import type { ViewId } from "@/lib/quietforge/model";
 
 const NAV: { id: ViewId; label: string; icon: typeof Compass }[] = [
@@ -13,6 +16,22 @@ const NAV: { id: ViewId; label: string; icon: typeof Compass }[] = [
 ];
 
 export function Shell() {
+  const { user, isPending } = useCurrentUserState();
+  const [readyKey, setReadyKey] = useState<string | null>(null);
+  const storageKey = user && !user.isDevFallback ? `quietforge.v1.user.${user.id}` : "quietforge.v1";
+
+  useEffect(() => {
+    if (isPending) return;
+    let current = true;
+    useForge.persist.setOptions({ name: storageKey });
+    void useForge.persist.rehydrate().catch(() => {
+      // Private browsing may deny localStorage; keep an in-memory workspace.
+    }).finally(() => {
+      if (current) setReadyKey(storageKey);
+    });
+    return () => { current = false; };
+  }, [isPending, storageKey]);
+
   const view = useForge((s) => s.view);
   const unit = useForge((s) => s.unit);
   const renderMode = useForge((s) => s.renderMode);
@@ -27,6 +46,10 @@ export function Shell() {
   const duplicate = useForge((s) => s.duplicate);
   const remove = useForge((s) => s.remove);
   const replaceAll = useForge((s) => s.replaceAll);
+
+  if (isPending || readyKey !== storageKey) {
+    return <div className="flex h-dvh items-center justify-center bg-bg text-sm text-muted">Opening your workspace…</div>;
+  }
 
   return (
     <div className="flex h-dvh flex-col bg-bg text-fg lg:flex-row">
@@ -44,6 +67,7 @@ export function Shell() {
           ))}
         </nav>
         <div className="space-y-2 border-t border-border px-4 py-4">
+          <AccountControl />
           <UnitToggle unit={unit} onChange={setUnit} />
           <p className="font-mono text-xs text-muted">Saved on this device</p>
         </div>
@@ -57,6 +81,9 @@ export function Shell() {
             <p className="font-mono text-xs text-brass">Concept studio</p>
           </div>
           <UnitToggle unit={unit} onChange={setUnit} />
+        </div>
+        <div className="border-b border-border px-4 py-2 lg:hidden">
+          <AccountControl />
         </div>
         <p className="border-b border-border px-4 py-2 text-xs leading-relaxed text-muted">
           Concept sketches only. In the US a silencer is an NFA firearm — making one without an approved Form 1

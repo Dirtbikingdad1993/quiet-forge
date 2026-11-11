@@ -84,6 +84,10 @@ export const useForge = create<ForgeState>()(
     {
       name: "quietforge.v1",
       version: 1,
+      // The shell chooses the guest or verified-user storage key only after
+      // the session resolves. Hydrating before that can expose the last
+      // visitor's local projects to another account on a shared device.
+      skipHydration: true,
       partialize: (state) => ({
         projects: state.projects,
         activeId: state.activeId,

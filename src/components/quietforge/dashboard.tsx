@@ -22,6 +22,7 @@ export function Dashboard({
   onDuplicate,
   onRemove,
   onReplace,
+  cloudEnabled,
 }: {
   projects: Project[];
   unit: Unit;
@@ -32,6 +33,7 @@ export function Dashboard({
   onDuplicate: (id: string) => void;
   onRemove: (id: string) => void;
   onReplace: (projects: Project[]) => void;
+  cloudEnabled: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [creating, setCreating] = useState(false);
@@ -64,7 +66,7 @@ export function Dashboard({
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Studies</h1>
             <p className="mt-1 max-w-xl text-sm text-muted">
-              Parametric cross-sections saved on this device. Open one to edit the sketch.
+              {cloudEnabled ? "Your studies sync to your account across devices. Open one to edit the sketch." : "Parametric cross-sections saved on this device. Open one to edit the sketch."}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

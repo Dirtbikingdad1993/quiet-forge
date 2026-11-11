@@ -28,6 +28,18 @@ type ForgeState = {
   replaceAll: (projects: Project[]) => void;
 };
 
+export type WorkspaceSnapshot = Pick<ForgeState, "projects" | "activeId" | "view" | "unit" | "renderMode">;
+
+export function workspaceSnapshot(state: WorkspaceSnapshot): WorkspaceSnapshot {
+  return {
+    projects: state.projects,
+    activeId: state.activeId,
+    view: state.view,
+    unit: state.unit,
+    renderMode: state.renderMode,
+  };
+}
+
 export const useForge = create<ForgeState>()(
   persist(
     (set, get) => ({
@@ -88,13 +100,7 @@ export const useForge = create<ForgeState>()(
       // the session resolves. Hydrating before that can expose the last
       // visitor's local projects to another account on a shared device.
       skipHydration: true,
-      partialize: (state) => ({
-        projects: state.projects,
-        activeId: state.activeId,
-        view: state.view,
-        unit: state.unit,
-        renderMode: state.renderMode,
-      }),
+      partialize: (state) => workspaceSnapshot(state),
       merge: (persisted, current) => {
         try {
           const saved = (persisted ?? {}) as Partial<ForgeState>;

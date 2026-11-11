@@ -73,7 +73,7 @@ function Login() {
             Join QuietForge with an individual account, or sign back in whenever you return.
           </p>
           <div className="rounded-lg border border-border bg-surface px-4 py-3 text-sm text-muted">
-            Sketches and studies are still saved on this device. Cloud project syncing is coming separately.
+            Your studies sync securely across your signed-in devices. You can keep working offline, and changes will upload when you reconnect.
           </div>
         </section>
 
@@ -138,7 +138,7 @@ function Login() {
               </form>
               <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-muted">
                 <LockKeyhole className="mt-0.5 size-4 shrink-0" />
-                Your password is handled securely. Project files remain on your current device.
+                Your password is handled securely. Your studies are private to your account and sync to the cloud.
               </p>
             </>
           )}

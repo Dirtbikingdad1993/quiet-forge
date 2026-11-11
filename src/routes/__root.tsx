@@ -4,7 +4,7 @@ import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { Analytics } from "@vercel/analytics/react";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "QuietForge";
+const APP_NAME = "Suppressor Studio";
 
 export const Route = createRootRoute({
   head: () => ({

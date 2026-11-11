@@ -67,10 +67,10 @@ function Login() {
           <div className="inline-flex size-12 items-center justify-center rounded-xl border border-brass/40 bg-brass/10 text-brass">
             <ShieldCheck className="size-6" />
           </div>
-          <p className="font-mono text-xs tracking-widest text-brass">QUIETFORGE / ACCOUNTS</p>
+          <p className="font-mono text-xs tracking-widest text-brass">SUPPRESSOR STUDIO / ACCOUNTS</p>
           <h1 className="text-4xl font-semibold tracking-tight">Your workspace. Your account.</h1>
           <p className="leading-relaxed text-muted">
-            Join QuietForge with an individual account, or sign back in whenever you return.
+            Join Suppressor Studio with an individual account, or sign back in whenever you return.
           </p>
           <div className="rounded-lg border border-border bg-surface px-4 py-3 text-sm text-muted">
             Your studies sync securely across your signed-in devices. You can keep working offline, and changes will upload when you reconnect.
@@ -81,7 +81,7 @@ function Login() {
           <div className="mb-6 flex size-11 items-center justify-center rounded-lg bg-brass/10 text-brass md:hidden">
             <UserRoundPlus className="size-5" />
           </div>
-          <p className="font-mono text-xs uppercase tracking-widest text-brass">QuietForge account</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-brass">Suppressor Studio account</p>
           {isPending ? (
             <div className="mt-6 h-72 animate-pulse rounded-lg bg-surface-2" aria-label="Checking your account" />
           ) : user ? (

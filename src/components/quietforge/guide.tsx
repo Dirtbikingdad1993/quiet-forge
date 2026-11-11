@@ -14,8 +14,8 @@ const TIPS: Record<ViewId, string> = {
 
 const QUICK_HELP = [
   { question: "How do I save my studies?", answer: "Changes save automatically in your browser. Sign in to sync studies to your account, and wait for the Cloud synced indicator before switching devices." },
-  { question: "How do I restore a backup?", answer: "Open Studies, choose Restore, and select a JSON backup previously exported from QuietForge. Restoring replaces the current study list, so export a backup first." },
-  { question: "What can the AI help with?", answer: "QuietForge Guide can explain app features, help with backup or sync issues, and discuss general engineering and safety concepts. It cannot provide instructions to manufacture or optimize a weapon." },
+  { question: "How do I restore a backup?", answer: "Open Studies, choose Restore, and select a JSON backup previously exported from Suppressor Studio. Restoring replaces the current study list, so export a backup first." },
+  { question: "What can the AI help with?", answer: "Suppressor Studio Guide can explain app features, help with backup or sync issues, and discuss general engineering and safety concepts. It cannot provide instructions to manufacture or optimize a weapon." },
 ];
 
 export function Guide({ view }: { view: ViewId }) {
@@ -42,7 +42,7 @@ export function Guide({ view }: { view: ViewId }) {
     setBusy(true);
     setError(null);
     if (!user || user.isDevFallback) {
-      setError("Sign in with a QuietForge account to ask live AI questions. Quick help works without an account.");
+      setError("Sign in with a Suppressor Studio account to ask live AI questions. Quick help works without an account.");
       setBusy(false);
       return;
     }
@@ -59,11 +59,11 @@ export function Guide({ view }: { view: ViewId }) {
   return (
     <div className="pointer-events-none fixed bottom-20 right-3 z-40 flex max-h-[calc(100dvh-7rem)] w-[min(24rem,calc(100vw-1.5rem))] flex-col items-end gap-2 lg:bottom-5 lg:right-5">
       {open && (
-        <section aria-label="QuietForge AI guide" className="pointer-events-auto flex max-h-[min(75dvh,41rem)] w-full flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-2xl">
+        <section aria-label="Suppressor Studio AI guide" className="pointer-events-auto flex max-h-[min(75dvh,41rem)] w-full flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-2xl">
           <header className="flex items-center gap-3 border-b border-border px-4 py-3">
             <Bot className="size-5 text-brass" />
             <div className="min-w-0 flex-1">
-              <h2 className="text-sm font-semibold">QuietForge Guide</h2>
+              <h2 className="text-sm font-semibold">Suppressor Studio Guide</h2>
               <p className="text-xs text-muted">App help, useful tips, and AI questions</p>
             </div>
             <button aria-label="Close guide" type="button" onClick={() => setOpen(false)} className="flex size-9 items-center justify-center rounded-md hover:bg-surface-2"><X className="size-4" /></button>
@@ -91,7 +91,7 @@ export function Guide({ view }: { view: ViewId }) {
 
             {messages.map((message, index) => (
               <div key={index} className={`max-w-[92%] rounded-lg px-3 py-2 leading-relaxed whitespace-pre-wrap ${message.role === "user" ? "ml-auto bg-brass/10" : "border border-border bg-bg"}`}>
-                <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-muted">{message.role === "user" ? "You" : "QuietForge Guide"}</p>
+                <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-muted">{message.role === "user" ? "You" : "Suppressor Studio Guide"}</p>
                 {message.text}
               </div>
             ))}
@@ -100,7 +100,7 @@ export function Guide({ view }: { view: ViewId }) {
           </div>
 
           <form onSubmit={submit} className="flex gap-2 border-t border-border p-3">
-            <label htmlFor="guide-question" className="sr-only">Ask QuietForge Guide</label>
+            <label htmlFor="guide-question" className="sr-only">Ask Suppressor Studio Guide</label>
             <input id="guide-question" value={input} onChange={(event) => setInput(event.target.value)} maxLength={2000} placeholder="Ask a question…" className="min-h-11 min-w-0 flex-1 rounded-md border border-border bg-bg px-3 text-sm outline-none focus:border-brass" />
             <button type="submit" disabled={!input.trim() || busy} aria-label="Ask guide" className="flex min-h-11 min-w-11 items-center justify-center rounded-md bg-brass text-brass-ink disabled:opacity-50"><Send className="size-4" /></button>
           </form>

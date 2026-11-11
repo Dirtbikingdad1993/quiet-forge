@@ -54,7 +54,7 @@ export function Dashboard({
     const blob = new Blob([JSON.stringify({ version: 3, projects }, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "quietforge-studies.json";
+    a.download = "suppressor-studio-studies.json";
     a.click();
     URL.revokeObjectURL(a.href);
   };
@@ -105,7 +105,7 @@ export function Dashboard({
                 if (!file) return;
                 const parsed = parseBackup(await file.text());
                 if (!parsed) {
-                  setNotice("That file is not a QuietForge study backup.");
+                  setNotice("That file is not a Suppressor Studio study backup.");
                   return;
                 }
                 onReplace(parsed);

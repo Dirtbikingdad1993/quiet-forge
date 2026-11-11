@@ -70,7 +70,7 @@ export function Shell() {
         <div className="flex items-center gap-3 px-4 py-5">
           <Mark />
           <div>
-            <p className="text-sm font-semibold tracking-wide">QuietForge</p>
+            <p className="text-sm font-semibold tracking-wide">Suppressor Studio</p>
             <p className="font-mono text-xs text-brass">CONCEPT STUDIO</p>
           </div>
         </div>
@@ -90,7 +90,7 @@ export function Shell() {
         <div className="flex items-center gap-3 border-b border-border px-4 py-3 lg:hidden">
           <Mark />
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold">QuietForge</p>
+            <p className="text-sm font-semibold">Suppressor Studio</p>
             <p className="font-mono text-xs text-brass">Concept studio</p>
           </div>
           <UnitToggle unit={unit} onChange={setUnit} />

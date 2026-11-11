@@ -24,9 +24,9 @@ function Plans() {
   return (
     <main className="min-h-dvh bg-bg px-5 py-8 text-fg">
       <div className="mx-auto max-w-4xl">
-        <Link to="/" className="inline-flex min-h-11 items-center gap-2 text-sm text-muted hover:text-fg"><ArrowLeft className="size-4" /> Back to QuietForge</Link>
+        <Link to="/" className="inline-flex min-h-11 items-center gap-2 text-sm text-muted hover:text-fg"><ArrowLeft className="size-4" /> Back to Suppressor Studio</Link>
         <div className="mb-8 mt-8 space-y-3 text-center">
-          <p className="font-mono text-xs uppercase tracking-widest text-brass">QuietForge / Membership</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-brass">Suppressor Studio / Membership</p>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Free to start. Pro when you're ready.</h1>
           <p className="mx-auto max-w-xl text-muted">Both plans include private accounts and device syncing. Pro offers more space and more AI assistance.</p>
         </div>

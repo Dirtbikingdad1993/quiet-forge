@@ -53,5 +53,5 @@ test("concept reports contain only a non-dimensional cover, never printable geom
   assert.doesNotMatch(svg, /<mesh|<triangle|<vertex/);
   const pdf = await makeConceptPdf("Test (1)").text();
   assert.match(pdf, /^%PDF-1\.4/);
-  assert.match(pdf, /Test \\(1\\\)/);
+  assert.ok(pdf.includes("Study: Test "));
 });

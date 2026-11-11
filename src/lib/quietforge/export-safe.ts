@@ -31,7 +31,7 @@ export function makeConceptSvg(name: string): string {
   <path d="M97 111h16m-8-8v16" stroke="#d9aa5f" stroke-width="2"/>
   <text x="146" y="117" fill="#d9aa5f" font-family="sans-serif" font-size="26" font-weight="700">SUPPRESSOR STUDIO</text>
   <text x="96" y="216" fill="#8ba2b6" font-family="sans-serif" font-size="23" letter-spacing="3">EDUCATIONAL CONCEPT RECORD</text>
-  <text x="96" y="297" fill="#f2f5f7" font-family="sans-serif" font-weight="700" font-size="44" textLength="0">${label}</text>
+  <text x="96" y="297" fill="#f2f5f7" font-family="sans-serif" font-weight="700" font-size="38">${label}</text>
   <path d="M96 355H1104" stroke="#476478" stroke-width="2"/>
   <circle cx="320" cy="455" r="50" fill="none" stroke="#6bc4db" stroke-width="6"/>
   <circle cx="320" cy="455" r="14" fill="#6bc4db"/>

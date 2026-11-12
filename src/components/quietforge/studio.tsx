@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { CALIBERS, derive, type Project, type Unit } from "@/lib/quietforge/model";
 import { CountControl, LengthControl, SelectField } from "@/components/quietforge/ui";
 import { Viewport } from "@/components/quietforge/viewport";
@@ -26,6 +28,13 @@ export function Studio({
 }) {
   const derived = derive(project);
   const depthLabel = project.style === "radial" ? "Disk thickness" : "Cone depth";
+  const [previewVisible, setPreviewVisible] = useState(true);
+
+  // Give controls the full screen by default on narrow mobile displays.
+  // The desktop retains the split layout until the user hides the preview.
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 1023px)").matches) setPreviewVisible(false);
+  }, []);
 
   return (
     <div className={visible ? "flex min-h-0 flex-1 flex-col" : "hidden"}>
@@ -37,7 +46,7 @@ export function Studio({
           className="min-w-0 flex-1 bg-transparent text-base font-semibold text-fg outline-none placeholder:text-muted sm:max-w-sm"
         />
         <span className="hidden font-mono text-xs text-muted md:inline">{derived.caliberLabel}</span>
-        <div className="ml-auto flex rounded-md border border-border bg-bg p-1">
+        <div className="flex rounded-md border border-border bg-bg p-1 sm:ml-auto">
           <ModeButton active={mode === "concept"} onClick={() => onMode("concept")}>
             Concept
           </ModeButton>
@@ -45,17 +54,37 @@ export function Studio({
             Blueprint
           </ModeButton>
         </div>
+        <button
+          type="button"
+          aria-controls="studio-preview"
+          aria-expanded={previewVisible}
+          onClick={() => setPreviewVisible((current) => !current)}
+          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-3 text-sm font-semibold text-brass hover:bg-surface-2"
+        >
+          {previewVisible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+          {previewVisible ? "Hide preview" : "Show preview"}
+        </button>
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <div className="h-[46dvh] min-h-64 lg:h-auto lg:min-h-0 lg:flex-1">
-          <Viewport derived={derived} mode={mode} unit={unit} visible={visible} />
+        <div
+          id="studio-preview"
+          className={previewVisible
+            ? "h-[30dvh] min-h-48 max-h-[22rem] shrink-0 border-b border-border lg:h-auto lg:max-h-none lg:min-w-0 lg:flex-1 lg:border-b-0"
+            : "hidden"}
+        >
+          <Viewport derived={derived} mode={mode} unit={unit} visible={visible && previewVisible} />
         </div>
 
-        <aside className="min-h-0 flex-1 overflow-y-auto border-t border-border bg-surface lg:w-80 lg:flex-none lg:border-l lg:border-t-0">
-          <div className="space-y-6 p-4">
-            <section className="space-y-4">
-              <h2 className="font-mono text-xs tracking-wide text-brass">ENVELOPE</h2>
+        <aside className={previewVisible
+          ? "min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain bg-surface lg:w-[62%] lg:flex-none lg:border-l lg:border-border"
+          : "min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain bg-surface lg:w-full"}>
+          <div className={previewVisible ? "mx-auto w-full max-w-4xl space-y-5 p-4 sm:p-6" : "mx-auto w-full max-w-5xl space-y-5 p-4 sm:p-6 lg:px-10"}>
+            <section className="space-y-5 rounded-xl border border-border bg-bg/60 p-4 sm:p-6">
+              <div>
+                <h2 className="text-lg font-semibold tracking-wide text-brass">ENVELOPE</h2>
+                <p className="mt-1 text-sm leading-relaxed text-muted">Large controls. {previewVisible ? "Hide the preview for even more room." : "The preview is minimized so you can use the full width."}</p>
+              </div>
               <SelectField label="Caliber" value={project.caliberId} onChange={(caliberId) => onChange({ caliberId })}>
                 {["Rimfire", "Rifle", "Pistol"].map((group) => (
                   <optgroup key={group} label={group}>
@@ -72,8 +101,8 @@ export function Studio({
               <LengthControl label="Wall thickness" inches={project.wallIn} minIn={0.03} maxIn={0.2} stepIn={0.005} unit={unit} digits={3} onChange={(wallIn) => onChange({ wallIn })} />
             </section>
 
-            <section className="space-y-4">
-              <h2 className="font-mono text-xs tracking-wide text-brass">STACK</h2>
+            <section className="space-y-5 rounded-xl border border-border bg-bg/60 p-4 sm:p-6">
+              <h2 className="text-lg font-semibold tracking-wide text-brass">STACK</h2>
               <LengthControl label="Blast chamber" inches={project.blastIn} minIn={0.4} maxIn={6} stepIn={0.05} unit={unit} digits={2} onChange={(blastIn) => onChange({ blastIn })} />
               <CountControl label="Baffle count" value={project.baffleCount} min={1} max={12} onChange={(baffleCount) => onChange({ baffleCount })} />
               <LengthControl label={depthLabel} inches={project.coneDepthIn} minIn={0.08} maxIn={0.9} stepIn={0.02} unit={unit} digits={2} onChange={(coneDepthIn) => onChange({ coneDepthIn })} />
@@ -90,8 +119,8 @@ export function Studio({
               <StackBudget derived={derived} />
             </section>
 
-            <section className="space-y-2">
-              <h2 className="font-mono text-xs tracking-wide text-brass">FIT</h2>
+            <section className="space-y-3 rounded-xl border border-border bg-bg/60 p-4 sm:p-6">
+              <h2 className="text-lg font-semibold tracking-wide text-brass">FIT</h2>
               <ul className="space-y-2">
                 {derived.issues.map((issue) => (
                   <li key={issue.text} className={`text-sm leading-snug ${LEVEL[issue.level]}`}>

@@ -19,7 +19,7 @@ test("the public learning library has substantial, navigable coverage", () => {
 test("lesson IDs, references, materials and questions have valid distinct targets", () => {
   assert.equal(new Set(lessons.map((x) => x.id)).size, lessons.length);
   assert.equal(new Set(materials.map((x) => x.id)).size, materials.length);
-  assert.equal(new Set(sources.map((x) => x.id)).size, sources.length);
+  assert.equal(new Set<string>(sources.map((x) => x.id)).size, sources.length);
   assert.equal(new Set(knowledgeQuestions.map((x) => x.id)).size, knowledgeQuestions.length);
   const ids = new Set(sources.map((x) => x.id));
   for (const lesson of lessons) {

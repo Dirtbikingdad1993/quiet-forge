@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import {
   ArrowLeft, BookOpen, Check, ChevronRight, ClipboardList, ExternalLink,
-  GraduationCap, HelpCircle, Layers3, LibraryBig, Microscope, Search, ShieldAlert
+  GraduationCap, Layers3, LibraryBig, Microscope, Search, ShieldAlert
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import {
-  designFamilies, getLesson, glossary, knowledgeQuestions,
+  designFamilies, glossary, knowledgeQuestions,
   lessonCategories, lessons, materials, sources, type MaterialCard,
 } from "@/lib/quietforge/learn-content";
 

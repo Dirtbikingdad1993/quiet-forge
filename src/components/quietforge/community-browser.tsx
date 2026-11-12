@@ -10,7 +10,7 @@ import {
 } from "@/lib/quietforge/community-catalog";
 import { useEffect } from "react";
 import {
-  ftnReferences, referenceCategories,
+  ftnReferences, referenceCategories, ftnUploadedDocuments, ftnUploadedFileCount,
   readReferenceSelection, writeReferenceSelection,
   type ReferenceCategory,
 } from "@/lib/quietforge/ftn-references";
@@ -142,9 +142,9 @@ function FtnReferenceCatalog() {
     <section className={panel + " space-y-4"} aria-label="FTN project names from submitted chart">
       <div>
         <p className="font-mono text-xs uppercase tracking-wider text-brass">USER-SUBMITTED FTN.5 CHART</p>
-        <h2 className="mt-2 text-xl font-semibold">Browse 13 project names</h2>
+        <h2 className="mt-2 text-xl font-semibold">Browse {ftnReferences.length} project references</h2>
         <p className="mt-2 text-sm leading-7 text-muted">
-          These are chart labels, not authenticated design specifications. Select an entry for an informational
+          Entries reflect the original chart plus uploaded file names, not authenticated design specifications. Select an entry for an informational
           card or keep its name open as a research reference on the Sketch page. No CAD, dimensions,
           suppressor-part files, or buildable presets are loaded.
         </p>
@@ -183,7 +183,8 @@ function FtnReferenceCatalog() {
             <p className="font-mono text-xs uppercase tracking-wider text-brass">{selected.category} · Reference only</p>
             <h3 className="text-lg font-semibold">{selected.label}</h3>
             <p className="text-sm leading-6 text-muted">{selected.note}</p>
-            <p className="text-xs leading-6 text-muted">Names come from your uploaded chart; compatibility,
+            {selected.filename && <p className="break-all text-xs text-muted">File name: {selected.filename} (not hosted)</p>}
+            <p className="text-xs leading-6 text-muted">Names come from your uploaded chart or file names; compatibility,
               construction claims, and measurements have not been verified.</p>
             <button type="button" onClick={() => keep(selected.id)}
               className="min-h-11 w-full rounded-md border border-brass/50 px-3 text-sm font-semibold text-brass hover:bg-brass/10">
@@ -221,6 +222,24 @@ export function CommunityCatalog() {
       <div className="mx-auto max-w-6xl space-y-5 px-4 py-6 sm:px-6">
         <ResearchNotice/>
         <FtnReferenceCatalog/>
+        <section className={panel + " space-y-3"} aria-label="Uploaded FTN document references">
+          <h2 className="text-lg font-semibold">Uploaded document index</h2>
+          <p className="text-sm leading-6 text-muted">
+            {ftnUploadedFileCount} STL filenames and {ftnUploadedDocuments.length} PDF document titles were submitted
+            for research indexing. These are catalog entries only: Suppressor Studio does not host their bytes,
+            reproduce assembly instructions, or turn suppressor geometry into presets or slicer exports.
+          </p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {ftnUploadedDocuments.map((doc) => (
+              <article key={doc.filename} className="rounded-lg border border-border bg-bg p-3">
+                <p className="break-words text-sm font-semibold text-fg">{doc.filename}</p>
+                <p className="mt-1 font-mono text-xs text-brass">{doc.category} · Uploaded PDF reference</p>
+                <p className="mt-2 text-xs leading-6 text-muted">{doc.description}</p>
+                <p className="mt-1 text-xs text-muted">{doc.creditedTo}</p>
+              </article>
+            ))}
+          </div>
+        </section>
         <div className="flex flex-wrap items-center gap-3">
           <label className="relative min-w-48 flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted"/>

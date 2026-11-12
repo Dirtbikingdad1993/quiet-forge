@@ -5,7 +5,7 @@ import {
   FileText, FolderOpen, Info, Layers3, Search, ShieldAlert
 } from "lucide-react";
 import {
-  communityEntries, fileFormats, getCommunityEntry,
+  communityEntries, fileFormats,
   type CommunityEntry, type FormatEntry,
 } from "@/lib/quietforge/community-catalog";
 import {

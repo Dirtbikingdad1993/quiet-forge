@@ -17,6 +17,6 @@ test("file-format reference is substantive and covers common catalog formats", (
 });
 test("community directory is documentation-only, not an external file-link repository", () => {
   const data=JSON.stringify(communityEntries);
-  assert.doesNotMatch(data,/https?:\\/\\//i);
+  assert.ok(!data.includes("http://") && !data.includes("https://"));
   assert.ok(communityEntries.filter(e=>e.kind==="Named community project").every(e=>e.status==="Name supplied by community"));
 });

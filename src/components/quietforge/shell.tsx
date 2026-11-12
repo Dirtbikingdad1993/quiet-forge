@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Calculator, Compass, FolderKanban, Download } from "lucide-react";
+import { Calculator, Compass, FolderKanban, Download, BookOpen } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Dashboard } from "@/components/quietforge/dashboard";
 import { Engineering } from "@/components/quietforge/engineering";
 import { Studio } from "@/components/quietforge/studio";
@@ -80,6 +81,10 @@ export function Shell() {
           {NAV.map((item) => (
             <NavButton key={item.id} item={item} active={view === item.id} onClick={() => setView(item.id)} />
           ))}
+          <Link to="/learn" className="flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium text-brass hover:bg-brass/10">
+            <BookOpen className="size-4" /> Learn
+          </Link>
+          <p className="px-3 pt-1 text-xs leading-relaxed text-muted">Materials, sound science, design families &amp; safety</p>
         </nav>
         <div className="space-y-2 border-t border-border px-4 py-4">
           <AccountControl />
@@ -153,7 +158,7 @@ export function Shell() {
         />
       </div>
 
-      <nav className="grid grid-cols-3 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden">
+      <nav className="grid grid-cols-4 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden">
         {NAV.map((item) => (
           <button
             key={item.id}
@@ -169,6 +174,9 @@ export function Shell() {
             {item.label}
           </button>
         ))}
+        <Link to="/learn" className="flex min-h-14 flex-col items-center justify-center gap-1 text-xs font-semibold text-brass">
+          <BookOpen className="size-4" /> Learn
+        </Link>
       </nav>
       <ExportPanel open={exportOpen} onClose={() => setExportOpen(false)} activeName={active?.name ?? null} projects={projects} />
       <Guide view={view} />

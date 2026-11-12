@@ -16,6 +16,7 @@ const QUICK_HELP = [
   { question: "How do I save my studies?", answer: "Changes save automatically in your browser. Sign in to sync studies to your account, and wait for the Cloud synced indicator before switching devices." },
   { question: "How do I restore a backup?", answer: "Open Studies, choose Restore, and select a JSON backup previously exported from Suppressor Studio. Restoring replaces the current study list, so export a backup first." },
   { question: "What can the AI help with?", answer: "Suppressor Studio Guide can explain app features, help with backup or sync issues, and discuss general engineering and safety concepts. It cannot provide instructions to manufacture or optimize a weapon." },
+  { question: "Where can I learn about materials and suppressor science?", answer: "Open the Learn tab in the workspace to browse lessons, a materials encyclopedia, design-family explanations, a glossary and knowledge checks. The reference library works without live AI." },
 ];
 
 export function Guide({ view }: { view: ViewId }) {

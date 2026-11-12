@@ -21,7 +21,7 @@ test("lesson IDs, references, materials and questions have valid distinct target
   assert.equal(new Set(materials.map((x) => x.id)).size, materials.length);
   assert.equal(new Set<string>(sources.map((x) => x.id)).size, sources.length);
   assert.equal(new Set(knowledgeQuestions.map((x) => x.id)).size, knowledgeQuestions.length);
-  const ids = new Set(sources.map((x) => x.id));
+  const ids = new Set<string>(sources.map((x) => x.id));
   for (const lesson of lessons) {
     assert.ok(lesson.sections.length >= 2, lesson.title);
     assert.ok(lesson.keyPoints.length >= 2, lesson.title);

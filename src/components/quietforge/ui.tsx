@@ -78,7 +78,7 @@ export function LengthControl({
 
   return (
     <label className="block" htmlFor={id}>
-      <span className="mb-1.5 flex items-baseline justify-between gap-3 text-sm text-muted">
+      <span className="mb-2 flex flex-wrap items-baseline justify-between gap-2 text-base font-medium text-fg">
         <span>{label}</span>
         <span className="font-mono text-xs text-brass">{fmtLen(inches, unit, digits)}</span>
       </span>
@@ -91,7 +91,7 @@ export function LengthControl({
           step={unit === "mm" ? Math.max(0.1, stepIn * scale) : stepIn}
           value={shown}
           onChange={(e) => onChange(Number(e.target.value) / scale)}
-          className="w-full"
+          className="h-11 min-w-0 flex-1 cursor-pointer accent-brass touch-pan-y"
         />
         <input
           aria-label={`${label} value`}
@@ -106,7 +106,7 @@ export function LengthControl({
             setText(e.target.value);
             commit(e.target.value);
           }}
-          className="w-20 rounded-md border border-border bg-bg px-2 py-2 text-right font-mono text-xs text-fg outline-none focus:border-brass"
+          className="h-12 w-24 shrink-0 rounded-md border border-border bg-bg px-3 py-2 text-right font-mono text-base text-fg outline-none focus:border-brass"
         />
       </div>
     </label>
@@ -129,7 +129,7 @@ export function CountControl({
   const id = useId();
   return (
     <label className="block" htmlFor={id}>
-      <span className="mb-1.5 flex items-baseline justify-between text-sm text-muted">
+      <span className="mb-2 flex items-baseline justify-between gap-2 text-base font-medium text-fg">
         <span>{label}</span>
         <span className="font-mono text-xs text-brass">{value}</span>
       </span>
@@ -141,7 +141,7 @@ export function CountControl({
         step={1}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full"
+        className="h-11 w-full cursor-pointer accent-brass touch-pan-y"
       />
     </label>
   );
@@ -160,13 +160,13 @@ export function SelectField({
 }) {
   const id = useId();
   return (
-    <label className="block text-sm text-muted" htmlFor={id}>
+    <label className="block text-base font-medium text-fg" htmlFor={id}>
       {label}
       <select
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1.5 w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-fg outline-none focus:border-brass"
+        className="mt-2 min-h-12 w-full rounded-md border border-border bg-bg px-3 py-2.5 text-base text-fg outline-none focus:border-brass"
       >
         {children}
       </select>

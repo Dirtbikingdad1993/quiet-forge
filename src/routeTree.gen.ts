@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as GuncadIndexRouteImport } from './routes/guncad-index'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PlansRouteImport } from './routes/plans'
@@ -18,6 +20,16 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuncadIndexRoute = GuncadIndexRouteImport.update({
+  id: '/guncad-index',
+  path: '/guncad-index',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnRoute = LearnRouteImport.update({
@@ -43,6 +55,8 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
+  '/guncad-index': typeof GuncadIndexRoute
   '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
   '/plans': typeof PlansRoute
@@ -50,6 +64,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
+  '/guncad-index': typeof GuncadIndexRoute
   '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
   '/plans': typeof PlansRoute
@@ -58,6 +74,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
+  '/guncad-index': typeof GuncadIndexRoute
   '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
   '/plans': typeof PlansRoute
@@ -65,14 +83,38 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/learn' | '/login' | '/plans' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/community'
+    | '/guncad-index'
+    | '/learn'
+    | '/login'
+    | '/plans'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/learn' | '/login' | '/plans' | '/api/auth/$'
-  id: '__root__' | '/' | '/learn' | '/login' | '/plans' | '/api/auth/$'
+  to:
+    | '/'
+    | '/community'
+    | '/guncad-index'
+    | '/learn'
+    | '/login'
+    | '/plans'
+    | '/api/auth/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/community'
+    | '/guncad-index'
+    | '/learn'
+    | '/login'
+    | '/plans'
+    | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CommunityRoute: typeof CommunityRoute
+  GuncadIndexRoute: typeof GuncadIndexRoute
   LearnRoute: typeof LearnRoute
   LoginRoute: typeof LoginRoute
   PlansRoute: typeof PlansRoute
@@ -86,6 +128,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guncad-index': {
+      id: '/guncad-index'
+      path: '/guncad-index'
+      fullPath: '/guncad-index'
+      preLoaderRoute: typeof GuncadIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn': {
@@ -121,6 +177,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CommunityRoute: CommunityRoute,
+  GuncadIndexRoute: GuncadIndexRoute,
   LearnRoute: LearnRoute,
   LoginRoute: LoginRoute,
   PlansRoute: PlansRoute,

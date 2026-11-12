@@ -17,7 +17,7 @@ export function FtnReferencePicker() {
   return (
     <details className="rounded-xl border border-border bg-surface p-4 sm:p-5">
       <summary className="flex min-h-10 cursor-pointer items-center gap-3 text-sm font-semibold text-brass">
-        <BookOpen className="size-4" /> FTN.5 reference list (13 names)
+        <BookOpen className="size-4" /> FTN.5 research references ({ftnReferences.length} names)
       </summary>
       <div className="space-y-3 border-t border-border pt-4">
         <p className="text-sm leading-relaxed text-muted">
@@ -45,8 +45,9 @@ export function FtnReferencePicker() {
         {reference && (
           <div className="rounded-lg border border-brass/30 bg-brass/5 p-3 text-sm leading-relaxed" role="status">
             <p className="font-semibold text-fg">{reference.label}</p>
-            <p className="mt-1 font-mono text-xs text-brass">{reference.category} · User-submitted chart</p>
+            <p className="mt-1 font-mono text-xs text-brass">{reference.category} · {reference.filename ? "Uploaded filename" : "User-submitted chart"}</p>
             <p className="mt-2 text-muted">{reference.note}</p>
+            {reference.filename && <p className="mt-2 break-all text-xs text-muted">Recorded filename: {reference.filename}</p>}
           </div>
         )}
         <p className="text-xs leading-relaxed text-muted">

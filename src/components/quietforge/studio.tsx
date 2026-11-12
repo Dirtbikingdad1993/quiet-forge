@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { CALIBERS, derive, type Project, type Unit } from "@/lib/quietforge/model";
 import { CountControl, LengthControl, SelectField } from "@/components/quietforge/ui";
 import { Viewport } from "@/components/quietforge/viewport";
+import { FtnReferencePicker } from "@/components/quietforge/ftn-reference-picker";
 
 const LEVEL = {
   ok: "text-ok",
@@ -80,6 +81,7 @@ export function Studio({
           ? "min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain bg-surface lg:w-[62%] lg:flex-none lg:border-l lg:border-border"
           : "min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain bg-surface lg:w-full"}>
           <div className={previewVisible ? "mx-auto w-full max-w-4xl space-y-5 p-4 sm:p-6" : "mx-auto w-full max-w-5xl space-y-5 p-4 sm:p-6 lg:px-10"}>
+            <FtnReferencePicker />
             <section className="space-y-5 rounded-xl border border-border bg-bg/60 p-4 sm:p-6">
               <div>
                 <h2 className="text-lg font-semibold tracking-wide text-brass">ENVELOPE</h2>

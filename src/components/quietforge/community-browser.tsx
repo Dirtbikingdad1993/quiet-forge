@@ -8,6 +8,12 @@ import {
   communityEntries, fileFormats,
   type CommunityEntry, type FormatEntry,
 } from "@/lib/quietforge/community-catalog";
+import { useEffect } from "react";
+import {
+  ftnReferences, referenceCategories,
+  readReferenceSelection, writeReferenceSelection,
+  type ReferenceCategory,
+} from "@/lib/quietforge/ftn-references";
 import {
   makeCalibrationStl, makeCalibration3mf, makeConceptPdf
 } from "@/lib/quietforge/export-safe";
@@ -119,6 +125,82 @@ function CommunityDetail({ entry }: { entry: CommunityEntry }) {
   );
 }
 
+
+function FtnReferenceCatalog() {
+  const [filter, setFilter] = useState<"All" | ReferenceCategory>("All");
+  const [query, setQuery] = useState("");
+  const [selectedId, setSelectedId] = useState("rimfire");
+  const [keptId, setKeptId] = useState("");
+  useEffect(() => { setKeptId(readReferenceSelection()); }, []);
+  const visible = ftnReferences.filter((entry) =>
+    (filter === "All" || entry.category === filter) &&
+    (entry.label + " " + entry.note).toLowerCase().includes(query.toLowerCase().trim())
+  );
+  const selected = visible.find((entry) => entry.id === selectedId) ?? visible[0];
+  const keep = (id: string) => { writeReferenceSelection(id); setKeptId(id); };
+  return (
+    <section className={panel + " space-y-4"} aria-label="FTN project names from submitted chart">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-wider text-brass">USER-SUBMITTED FTN.5 CHART</p>
+        <h2 className="mt-2 text-xl font-semibold">Browse 13 project names</h2>
+        <p className="mt-2 text-sm leading-7 text-muted">
+          These are chart labels, not authenticated design specifications. Select an entry for an informational
+          card or keep its name open as a research reference on the Sketch page. No CAD, dimensions,
+          suppressor-part files, or buildable presets are loaded.
+        </p>
+      </div>
+      <div className="flex flex-wrap items-end gap-3">
+        <label className="min-w-44 flex-1 text-sm font-medium text-fg">
+          Search FTN entries
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Rimfire, PCC, Flow…"
+            className="mt-2 min-h-11 w-full rounded-md border border-border bg-bg px-3 text-sm text-fg outline-none focus:border-brass"/>
+        </label>
+        <label className="text-sm font-medium text-fg">
+          Category
+          <select value={filter} onChange={(e) => setFilter(e.target.value as typeof filter)}
+            className="mt-2 block min-h-11 rounded-md border border-border bg-bg px-3 text-sm text-fg">
+            <option>All</option>
+            {referenceCategories.map((category) => <option key={category}>{category}</option>)}
+          </select>
+        </label>
+      </div>
+      <div className="grid items-start gap-3 md:grid-cols-[1fr_1fr]">
+        <div className="max-h-72 space-y-1 overflow-y-auto rounded-lg border border-border bg-bg p-2">
+          {visible.map((entry) => (
+            <button key={entry.id} type="button"
+              onClick={() => setSelectedId(entry.id)}
+              aria-current={selected?.id === entry.id ? "true" : undefined}
+              className={"flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm " +
+                (selected?.id === entry.id ? "bg-brass/10 font-semibold text-brass" : "text-fg hover:bg-surface-2")}>
+              <span className="min-w-0">{entry.label}</span>
+              <span className="shrink-0 font-mono text-[11px] text-muted">{entry.category}</span>
+            </button>
+          ))}
+          {!visible.length && <p className="px-3 py-2 text-sm text-muted">No matching entries.</p>}
+        </div>
+        {selected && (
+          <article className="space-y-3 rounded-lg border border-border bg-bg p-4" aria-live="polite">
+            <p className="font-mono text-xs uppercase tracking-wider text-brass">{selected.category} · Reference only</p>
+            <h3 className="text-lg font-semibold">{selected.label}</h3>
+            <p className="text-sm leading-6 text-muted">{selected.note}</p>
+            <p className="text-xs leading-6 text-muted">Names come from your uploaded chart; compatibility,
+              construction claims, and measurements have not been verified.</p>
+            <button type="button" onClick={() => keep(selected.id)}
+              className="min-h-11 w-full rounded-md border border-brass/50 px-3 text-sm font-semibold text-brass hover:bg-brass/10">
+              {keptId === selected.id ? "Selected as research reference" : "Keep name as research reference"}
+            </button>
+            {keptId === selected.id && (
+              <Link to="/" className="inline-flex min-h-10 items-center text-sm font-medium text-brass hover:underline">
+                Open Sketch to view this reference
+              </Link>
+            )}
+          </article>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export function CommunityCatalog() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState<"All" | CommunityEntry["kind"]>("All");
@@ -138,6 +220,7 @@ export function CommunityCatalog() {
         description="A searchable reference to community project names, their documentation context, and broader safety and materials questions. FTN and HTN are listed by name without unverified build claims."/>
       <div className="mx-auto max-w-6xl space-y-5 px-4 py-6 sm:px-6">
         <ResearchNotice/>
+        <FtnReferenceCatalog/>
         <div className="flex flex-wrap items-center gap-3">
           <label className="relative min-w-48 flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted"/>

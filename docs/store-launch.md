@@ -21,7 +21,7 @@ Public website: https://suppressor-studio.vercel.app
 7. **Review devices and QA:** Validate onboarding, save and sync across devices, offline behavior, sign out, account deletion, browser/webview layout, network errors, and accessibility. Do not submit until tested.
 8. **Store listing:** Capture original screenshots from real supported devices; provide support URL, privacy URL, accurate content/age ratings, permissions/data-safety answers, release notes, and app-review demo account or mode.
 9. **Payment compliance:** Review each store's digital subscriptions and external purchase policies before enabling or promoting $9.99/month Pro.
-10. **PWA offline entry:** A store-quality service worker/offline launch path and installability assessment are still needed; having a manifest does not mean distribution is complete.
+10. **PWA offline entry:** A minimal service worker now caches only public assets and serves an offline notice. Full offline authenticated app operation and device-specific installability still need testing; a manifest alone does not mean distribution is complete.
 
 ## Target publishing path
 

@@ -2,6 +2,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-r
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { Analytics } from "@vercel/analytics/react";
+import { ServiceWorkerRegistrar } from "@/components/service-worker-registrar";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Suppressor Studio";
@@ -51,6 +52,7 @@ export const Route = createRootRoute({
         <meta name="twitter:image" content={`${PUBLIC_ORIGIN}/og.jpg`} />
       </head>
       <body className="bg-bg font-sans text-fg antialiased">
+        <ServiceWorkerRegistrar />
         <PreviewHostBridge />
         <AuthProvider>
           <Outlet />

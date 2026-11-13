@@ -452,8 +452,8 @@ export function injectGrokPwaHead(html, ctx = {}) {
     .filter(([key]) => {
       // Respect the app's own manifest and icons when supplied by a product.
       // Keep platform fallback markup only for apps without explicit PWA assets.
-      if (key === "manifest") return !/<link\\b[^>]*\\brel=["']manifest["']/i.test(next);
-      if (key === "apple-touch-icon") return !/<link\\b[^>]*\\brel=["']apple-touch-icon["']/i.test(next);
+      if (key === "manifest") return !/<link\b[^>]*\brel=["']manifest["']/i.test(next);
+      if (key === "apple-touch-icon") return !/<link\b[^>]*\brel=["']apple-touch-icon["']/i.test(next);
       return !next.includes(`name="${key}"`);
     })
     .map(([, tag]) => tag);
